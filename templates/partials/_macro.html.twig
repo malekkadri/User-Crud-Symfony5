@@ -1,0 +1,5 @@
+{% macro is_active(segment) %}
+    {% if segment in app.request.attributes.get('_route') %}
+        active
+    {% endif %}
+{% endmacro %}

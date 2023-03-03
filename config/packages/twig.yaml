@@ -1,0 +1,9 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    
+    
+    globals:
+        const_website_title: "Animaland"
+when@test:
+    twig:
+        strict_variables: true

@@ -1,0 +1,85 @@
+{% extends "admin/layout.html.twig" %}
+
+{% block title "Utilisateurs" %}
+
+{% block title_h1 "Gestion des utilisateurs" %}
+
+{% block stylesheets %}
+  <link href="{{ asset("sbadmin2/vendor/datatables/dataTables.bootstrap4.min.css") }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+    <div class="card shadow my-4">
+        <div class="card-header py-2 d-flex align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Utilisateurs</h6>
+            <a href="{{ path("admin_user_add") }}" class="btn btn-success btn-icon-split ml-auto">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Ajouter un utilisateur</span>
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="userTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Nom d'utilisateur</th>
+                            <th>Type</th>
+                            <th>Créer le</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    {# <tfoot>
+                        <tr>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Nom d'utilisateur</th>
+                            <th>Type</th>
+                            <th>Créer le</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot> #}
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.firstName }}</td>
+                            <td>{{ user.lastName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.roleTitle }}</td>
+                            <td>{{ user.createdAt | date("d-m-Y H:i") }}</td>
+                            <td>
+                                <a href="{{ path("admin_user_show", {"id": user.id}) }}" class="btn btn-info rounded with-icon">
+                                    <i class="far fa-eye"></i>
+                                </a>
+                                {% if user.roleTitle == "Utilisateur" %}
+                                    <a href="{{ path("admin_user_edit", {"id": user.id}) }}" class="btn btn-primary rounded with-icon">
+                                        <i class="far fa-edit"></i>
+                                    </a>
+                                    <a href="{{ path("admin_user_delete", {"id": user.id}) }}" class="btn btn-danger rounded with-icon">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script src="{{ asset("sbadmin2/vendor/datatables/jquery.dataTables.min.js") }}"></script>
+  <script src="{{ asset("sbadmin2/vendor/datatables/dataTables.bootstrap4.min.js") }}"></script>
+
+  <script src="{{ asset("js/dataTable/user.js") }}"></script>
+{% endblock %}

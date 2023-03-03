@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="4"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin"/>
+        <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
+    </plugins>
+    <projectFiles>
+        <ignoreFiles>
+            <directory name="vendor"/>
+            <!-- Deprecated classes, not worth fixing -->
+            <file name="Command/ImportMappingDoctrineCommand.php"/>
+            <file name="Command/Proxy/OrmProxyCommand.php"/>
+            <file name="DependencyInjection/Compiler/WellKnownSchemaFilterPass.php"/>
+        </ignoreFiles>
+        <directory name="CacheWarmer"/>
+        <directory name="Command"/>
+        <directory name="Controller"/>
+        <directory name="DataCollector"/>
+        <directory name="Dbal"/>
+        <directory name="DependencyInjection"/>
+        <directory name="EventSubscriber"/>
+        <directory name="Mapping"/>
+        <directory name="Repository"/>
+        <directory name="Tests"/>
+        <directory name="Twig"/>
+        <file name="ConnectionFactory.php"/>
+        <file name="DoctrineBundle.php"/>
+        <file name="ManagerConfigurator.php"/>
+        <file name="Registry.php"/>
+    </projectFiles>
+    <issueHandlers>
+        <InvalidArrayOffset>
+            <errorLevel type="suppress">
+                <!-- requires a release of https://github.com/doctrine/dbal/pull/5261 -->
+                <file name="Tests/ConnectionFactoryTest.php"/>
+            </errorLevel>
+        </InvalidArrayOffset>
+        <RedundantPropertyInitializationCheck>
+            <errorLevel type="suppress">
+                <!-- Properties can be uninitialized in tests if setUp() fails. -->
+                <directory name="Tests"/>
+            </errorLevel>
+        </RedundantPropertyInitializationCheck>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <!-- We use the "Foo" namespace in unit tests. We are aware that those classes don't exist. -->
+                <referencedClass name="Foo\*"/>
+                <referencedClass name="Symfony\Bridge\Doctrine\Attribute\MapEntity"/>
+                <referencedClass name="Symfony\Component\VarExporter\LazyGhostTrait"/>
+                <referencedClass name="Symfony\Component\VarExporter\LazyObjectInterface"/>
+            </errorLevel>
+        </UndefinedClass>
+        <UndefinedDocblockClass>
+            <errorLevel type="suppress">
+                <!-- https://github.com/symfony/symfony/issues/45609 -->
+                <referencedClass name="UnitEnum" />
+                <directory name="DependencyInjection"/>
+                <directory name="Tests/DependencyInjection"/>
+            </errorLevel>
+        </UndefinedDocblockClass>
+        <UndefinedTrait>
+            <errorLevel type="suppress">
+                <!-- Consumer is meant to check if trait exists before using this class -->
+                <file name="Repository/LazyServiceEntityRepository.php"/>
+            </errorLevel>
+        </UndefinedTrait>
+        <DuplicateClass>
+            <errorLevel type="suppress">
+                <!-- Conditional class definition-->
+                <file name="Repository/ServiceEntityRepository.php"/>
+            </errorLevel>
+        </DuplicateClass>
+    </issueHandlers>
+</psalm>

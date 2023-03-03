@@ -1,0 +1,70 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title "Connexion" %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background: url('{{ asset('img/login.jpg') }}'); background-size: cover;"></div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Connexion</h1>
+                                </div>
+                                {% if error %}
+                                    <div class="alert alert-danger">Oups, email ou mot de passe invalide.</div>
+                                {% endif %}
+                                {% for label, messages in app.flashes %}
+                                    <div class="container">
+                                        <div class="alert alert-{{ label }}">
+                                            {% for message in messages %}
+                                                <p>{{ message | raw }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <form class="user" action="{{ path('login') }}" method="post">
+                                    <div class="form-group">
+                                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                                    </div>
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox small">
+                                            <input type="checkbox" name="_remember_me" class="custom-control-input" id="remember_me" checked>
+                                            <label class="custom-control-label" for="remember_me">Se souvenir de moi ?</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">Se connecter</button>
+
+                                    {# Uncomment for facebook or google connection (not working yet) #}
+                                    {# <hr>
+                                    <a href="" class="btn btn-google btn-user btn-block">
+                                        <i class="fab fa-google fa-fw"></i> Login with Google
+                                    </a>
+                                    <a href="" class="btn btn-facebook btn-user btn-block">
+                                        <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                    </a> #}
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                    <a class="small" href="{{ path('forgot_password') }}">Mot de passe oublié ?</a>
+                                </div>
+                                <div class="text-center">
+                                    <a class="small" href="{{ path('registration') }}">S'inscrire ?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

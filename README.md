@@ -2,7 +2,7 @@
 Users CRUD using SB admin template with login, register and roles requires php: >=7.2.5/Symfony 5.4
 ## features 
 ### Languages and frameworks
-* PHP 7.4.3
+* PHP >=7.2.5
 * MySQL (MariaDB)
 * HTML / CSS
 * Javascript (Aos, Glightbox, Isotope, Validate, Purecounter, swipper, Waypoints, Bootstrap)
